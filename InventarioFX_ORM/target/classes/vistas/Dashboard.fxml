@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="mx.unison.controladores.DashboardController"
+            style="-fx-background-color: #f4f4f4;">
+
+    <top>
+        <HBox style="-fx-background-color: #00529e; -fx-padding: 15px;" alignment="CENTER_LEFT" spacing="20">
+            <Label text="UNISON - Panel de Control" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Cerrar Sesión" onAction="#cerrarSesion" style="-fx-background-color: #cc0000; -fx-text-fill: white; -fx-cursor: hand;"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox style="-fx-background-color: white; -fx-padding: 20px;" spacing="15" prefWidth="200">
+            <Label text="Módulos" style="-fx-font-weight: bold; -fx-text-fill: #666; -fx-font-size: 14px;"/>
+
+            <Button fx:id="btnProductos" text="📦 Productos" onAction="#abrirProductos" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-size: 16px;" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnAlmacenes" text="🏢 Almacenes" onAction="#abrirAlmacenes" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-size: 16px;" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnConfiguracion" text="⚙️ Configuración" onAction="#abrirConfiguracion" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-size: 16px;" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox style="-fx-padding: 30px;" spacing="20">
+            <Label text="¡Bienvenido al nuevo sistema!" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+            <Label text="Selecciona un módulo en el menú lateral para comenzar." style="-fx-font-size: 16px; -fx-text-fill: #666;"/>
+
+            <HBox spacing="20">
+                <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" HBox.hgrow="ALWAYS">
+                    <Label text="Total Productos" style="-fx-text-fill: #888;"/>
+                    <Label text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
+                </VBox>
+                <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" HBox.hgrow="ALWAYS">
+                    <Label text="Total Almacenes" style="-fx-text-fill: #888;"/>
+                    <Label text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

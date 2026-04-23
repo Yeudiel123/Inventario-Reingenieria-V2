@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" style="-fx-padding: 40px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.unison.controladores.ConfiguracionController" alignment="TOP_CENTER">
+    <Label text="Configuración de Seguridad" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
+    <Label text="Cambiar contraseña de Administrador (ADMIN)" style="-fx-text-fill: #666;"/>
+
+    <VBox spacing="10" maxWidth="300">
+        <Label text="Nueva Contraseña:" style="-fx-font-weight: bold;"/>
+        <PasswordField fx:id="txtNuevaPass" style="-fx-padding: 10px;"/>
+
+        <Label text="Confirmar Contraseña:" style="-fx-font-weight: bold;"/>
+        <PasswordField fx:id="txtConfirmarPass" style="-fx-padding: 10px;"/>
+
+        <Button text="Actualizar Contraseña" onAction="#cambiarPassword" style="-fx-background-color: #00529e; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10px;" maxWidth="Infinity"/>
+    </VBox>
+</VBox>

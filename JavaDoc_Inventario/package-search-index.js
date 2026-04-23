@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"m":"InventarioFX_ORM","l":"mx.unison.controladores"},{"m":"InventarioFX_ORM","l":"mx.unison.datos"},{"m":"InventarioFX_ORM","l":"mx.unison.modelos"},{"m":"InventarioFX_ORM","l":"mx.unison.utileria"},{"m":"InventarioFX_ORM","l":"mx.unison.vistas"}];updateSearchResults();

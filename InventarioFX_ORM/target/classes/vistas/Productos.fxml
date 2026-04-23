@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox spacing="15" style="-fx-padding: 20px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.unison.controladores.ProductosController">
+    <Label text="Gestión de Productos" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="txtNombre" promptText="Nombre del producto" prefWidth="150" style="-fx-padding: 8px;"/>
+        <TextField fx:id="txtPrecio" promptText="Precio" prefWidth="80" style="-fx-padding: 8px;"/>
+        <TextField fx:id="txtCantidad" promptText="Stock" prefWidth="80" style="-fx-padding: 8px;"/>
+
+        <ComboBox fx:id="cmbAlmacen" promptText="Seleccione Almacén" prefWidth="150" style="-fx-padding: 4px;"/>
+
+        <Button text="💾 Guardar" onAction="#guardarProducto" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+        <Button text="❌ Cancelar" onAction="#limpiarFormulario" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+    </HBox>
+
+    <TableView fx:id="tablaProductos" VBox.vgrow="ALWAYS" style="-fx-font-size: 14px;">
+        <columns>
+            <TableColumn text="ID" prefWidth="50">
+                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Nombre" prefWidth="200">
+                <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Precio ($)" prefWidth="100">
+                <cellValueFactory><PropertyValueFactory property="precio" /></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Stock" prefWidth="80">
+                <cellValueFactory><PropertyValueFactory property="cantidad" /></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Almacén Asignado" prefWidth="200">
+                <cellValueFactory><PropertyValueFactory property="almacen" /></cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="✏️ Modificar Seleccionado" onAction="#cargarParaEditar" style="-fx-background-color: #ffc107; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+        <Button text="🗑️ Eliminar Seleccionado" onAction="#eliminarProducto" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+    </HBox>
+</VBox>

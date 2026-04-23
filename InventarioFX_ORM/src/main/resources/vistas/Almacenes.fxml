@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox spacing="15" style="-fx-padding: 20px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.unison.controladores.AlmacenesController">
+    <Label text="Gestión de Almacenes" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="txtNombre" promptText="Nombre del almacén" prefWidth="250" style="-fx-padding: 8px;"/>
+        <TextField fx:id="txtUbicacion" promptText="Ubicación (Ej. Edificio 5)" prefWidth="250" style="-fx-padding: 8px;"/>
+        <Button text="💾 Guardar" onAction="#guardarAlmacen" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+        <Button text="❌ Cancelar Edición" onAction="#limpiarFormulario" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+    </HBox>
+
+    <TableView fx:id="tablaAlmacenes" VBox.vgrow="ALWAYS" style="-fx-font-size: 14px;">
+        <columns>
+            <TableColumn text="ID" prefWidth="50">
+                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Nombre" prefWidth="250">
+                <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Ubicación" prefWidth="300">
+                <cellValueFactory><PropertyValueFactory property="ubicacion" /></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Creado Por" prefWidth="150">
+                <cellValueFactory><PropertyValueFactory property="creadoPor" /></cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="✏️ Modificar Seleccionado" onAction="#cargarParaEditar" style="-fx-background-color: #ffc107; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+        <Button text="🗑️ Eliminar Seleccionado" onAction="#eliminarAlmacen" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+    </HBox>
+</VBox>
