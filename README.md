@@ -3,6 +3,7 @@
 
 ## 📌 Descripción del Proyecto
 Este proyecto es una reestructuración completa (v2.0) de un sistema de inventario legacy (Tarea 12). Se eliminó la dependencia de Swing y JDBC puro para adoptar tecnologías modernas, mejorando la seguridad, escalabilidad y la interfaz de usuario.
+(si se abre el index.html en JavaDoc_Inventario sale una documentacion con javadoc en html )
 
 ## 🏗️ Arquitectura
 El proyecto sigue el patrón de diseño **MVC (Modelo-Vista-Controlador)** y el patrón **DAO (Data Access Object)**:
