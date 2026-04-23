@@ -1,4 +1,4 @@
-<img width="400" height="538" alt="sign in" src="https://github.com/user-attachments/assets/b8368944-b281-4259-806b-8f4ee13acfc2" />
+
 # Sistema de Inventario 2.0 (JavaFX + ORMLite)
 
 ## 📌 Descripción del Proyecto
@@ -18,5 +18,5 @@ El proyecto sigue el patrón de diseño **MVC (Modelo-Vista-Controlador)** y el 
 4. **Testing:** Integración de bases de datos SQLite "en memoria" (`jdbc:sqlite::memory:`) para pruebas unitarias limpias con JUnit 5.
 
 ## 📸 Vistas del Sistema
-<img width="801" height="627" alt="tabla" src="https://github.com/user-attachments/assets/24612d9c-f0c8-4dbf-9497-fc714ca2472a" />
 <img width="400" height="538" alt="sign in" src="https://github.com/user-attachments/assets/9cb52243-3235-459e-9cf2-0408741aefab" />
+<img width="801" height="627" alt="tabla" src="https://github.com/user-attachments/assets/24612d9c-f0c8-4dbf-9497-fc714ca2472a" />
