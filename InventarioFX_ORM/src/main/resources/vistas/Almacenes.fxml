@@ -2,36 +2,43 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-
-<VBox spacing="15" style="-fx-padding: 20px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.unison.controladores.AlmacenesController">
-    <Label text="Gestión de Almacenes" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
-
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="txtNombre" promptText="Nombre del almacén" prefWidth="250" style="-fx-padding: 8px;"/>
-        <TextField fx:id="txtUbicacion" promptText="Ubicación (Ej. Edificio 5)" prefWidth="250" style="-fx-padding: 8px;"/>
-        <Button text="💾 Guardar" onAction="#guardarAlmacen" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
-        <Button text="❌ Cancelar Edición" onAction="#limpiarFormulario" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
-    </HBox>
-
-    <TableView fx:id="tablaAlmacenes" VBox.vgrow="ALWAYS" style="-fx-font-size: 14px;">
+<VBox spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="mx.unison.controladores.AlmacenesController" stylesheets="@estilos.css" styleClass="page">
+    <VBox spacing="7">
+        <Label text="Almacenes" styleClass="page-title"/>
+        <Label text="Organiza las ubicaciones donde se resguardan los productos." styleClass="muted" wrapText="true"/>
+    </VBox>
+    <VBox spacing="16" styleClass="card">
+        <Label text="Datos del almacén" styleClass="section-title"/>
+        <GridPane hgap="16" vgap="8">
+            <columnConstraints><ColumnConstraints percentWidth="50"/><ColumnConstraints percentWidth="50"/></columnConstraints>
+            <Label text="Nombre" styleClass="field-label"/>
+            <Label text="Ubicación" styleClass="field-label" GridPane.columnIndex="1"/>
+            <TextField fx:id="txtNombre" promptText="Ej. Almacén principal" accessibleText="Nombre del almacén" minWidth="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="txtUbicacion" promptText="Ej. Edificio A, planta baja" accessibleText="Ubicación del almacén" minWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        </GridPane>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button text="Guardar almacén" onAction="#guardarAlmacen" styleClass="primary-button"/>
+            <Button text="Limpiar formulario" onAction="#limpiarFormulario"/>
+        </HBox>
+    </VBox>
+    <TableView fx:id="tablaAlmacenes" VBox.vgrow="ALWAYS" minHeight="170" accessibleText="Lista de almacenes">
+        <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+        <placeholder><VBox alignment="CENTER" spacing="8">
+            <Label text="Aún no hay almacenes" styleClass="section-title"/>
+            <Label text="Registra un almacén antes de agregar productos." styleClass="muted" wrapText="true"/>
+        </VBox></placeholder>
         <columns>
-            <TableColumn text="ID" prefWidth="50">
-                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Nombre" prefWidth="250">
-                <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Ubicación" prefWidth="300">
-                <cellValueFactory><PropertyValueFactory property="ubicacion" /></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Creado Por" prefWidth="150">
-                <cellValueFactory><PropertyValueFactory property="creadoPor" /></cellValueFactory>
-            </TableColumn>
+            <TableColumn text="ID" prefWidth="48" maxWidth="80"><cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory></TableColumn>
+            <TableColumn text="Almacén" prefWidth="200"><cellValueFactory><PropertyValueFactory property="nombre"/></cellValueFactory></TableColumn>
+            <TableColumn text="Ubicación" prefWidth="250"><cellValueFactory><PropertyValueFactory property="ubicacion"/></cellValueFactory></TableColumn>
+            <TableColumn text="Creado por" prefWidth="130"><cellValueFactory><PropertyValueFactory property="creadoPor"/></cellValueFactory></TableColumn>
         </columns>
     </TableView>
-
-    <HBox spacing="15" alignment="CENTER_RIGHT">
-        <Button text="✏️ Modificar Seleccionado" onAction="#cargarParaEditar" style="-fx-background-color: #ffc107; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
-        <Button text="🗑️ Eliminar Seleccionado" onAction="#eliminarAlmacen" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Label text="Los almacenes con productos no se pueden eliminar." styleClass="caption" wrapText="true"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Editar selección" onAction="#cargarParaEditar"/>
+        <Button text="Eliminar selección" onAction="#eliminarAlmacen" styleClass="danger-button"/>
     </HBox>
 </VBox>

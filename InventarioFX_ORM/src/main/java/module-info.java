@@ -1,3 +1,4 @@
+/** Aplicación local de inventario con interfaz JavaFX y persistencia SQLite. */
 module InventarioFX_ORM {
     // Librerías que necesitamos
     requires javafx.controls;

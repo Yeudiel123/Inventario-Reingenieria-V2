@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="mx.unison.controladores.DashboardController"
-            style="-fx-background-color: #f4f4f4;">
-
+            fx:controller="mx.unison.controladores.DashboardController" stylesheets="@estilos.css" styleClass="app-shell">
     <top>
-        <HBox style="-fx-background-color: #00529e; -fx-padding: 15px;" alignment="CENTER_LEFT" spacing="20">
-            <Label text="UNISON - Panel de Control" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
-            <Region HBox.hgrow="ALWAYS" />
-            <Button text="Cerrar Sesión" onAction="#cerrarSesion" style="-fx-background-color: #cc0000; -fx-text-fill: white; -fx-cursor: hand;"/>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="app-header">
+            <VBox spacing="3">
+                <Label text="Inventario" styleClass="brand-title"/>
+                <Label text="PRODUCTOS Y ALMACENES" styleClass="brand-caption"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblUsuario" text="" styleClass="header-user"/>
+            <Button text="Cerrar sesión" onAction="#cerrarSesion" styleClass="header-button"/>
         </HBox>
     </top>
-
     <left>
-        <VBox style="-fx-background-color: white; -fx-padding: 20px;" spacing="15" prefWidth="200">
-            <Label text="Módulos" style="-fx-font-weight: bold; -fx-text-fill: #666; -fx-font-size: 14px;"/>
-
-            <Button fx:id="btnProductos" text="📦 Productos" onAction="#abrirProductos" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-size: 16px;" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
-            <Button fx:id="btnAlmacenes" text="🏢 Almacenes" onAction="#abrirAlmacenes" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-size: 16px;" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
-            <Button fx:id="btnConfiguracion" text="⚙️ Configuración" onAction="#abrirConfiguracion" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-size: 16px;" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+        <VBox spacing="8" prefWidth="200" minWidth="200" styleClass="sidebar">
+            <Label text="ESPACIO DE TRABAJO" styleClass="nav-caption"/>
+            <Button fx:id="btnInicio" text="Resumen" onAction="#abrirInicio" maxWidth="Infinity" alignment="CENTER_LEFT" styleClass="nav-button"/>
+            <Button fx:id="btnProductos" text="Productos" onAction="#abrirProductos" maxWidth="Infinity" alignment="CENTER_LEFT" styleClass="nav-button"/>
+            <Button fx:id="btnAlmacenes" text="Almacenes" onAction="#abrirAlmacenes" maxWidth="Infinity" alignment="CENTER_LEFT" styleClass="nav-button"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Separator/>
+            <Button fx:id="btnConfiguracion" text="Mi contraseña" onAction="#abrirConfiguracion" maxWidth="Infinity" alignment="CENTER_LEFT" styleClass="nav-button"/>
+            <Label text="UNISON · Proyecto académico" styleClass="caption" wrapText="true"/>
         </VBox>
     </left>
-
     <center>
-        <VBox style="-fx-padding: 30px;" spacing="20">
-            <Label text="¡Bienvenido al nuevo sistema!" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
-            <Label text="Selecciona un módulo en el menú lateral para comenzar." style="-fx-font-size: 16px; -fx-text-fill: #666;"/>
-
-            <HBox spacing="20">
-                <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" HBox.hgrow="ALWAYS">
-                    <Label text="Total Productos" style="-fx-text-fill: #888;"/>
-                    <Label text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
+        <VBox spacing="24" styleClass="page">
+            <VBox spacing="7">
+                <Label text="Resumen del inventario" styleClass="page-title" wrapText="true"/>
+                <Label text="Consulta el estado actual y administra los módulos disponibles para tu cuenta." styleClass="muted" wrapText="true"/>
+            </VBox>
+            <HBox spacing="18">
+                <VBox spacing="12" minWidth="0" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label text="Productos registrados" styleClass="muted" wrapText="true"/>
+                    <Label fx:id="lblTotalProductos" text="—" styleClass="stat-value"/>
+                    <Label text="Referencias del catálogo" styleClass="caption" wrapText="true"/>
                 </VBox>
-                <VBox style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" HBox.hgrow="ALWAYS">
-                    <Label text="Total Almacenes" style="-fx-text-fill: #888;"/>
-                    <Label text="0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
+                <VBox spacing="12" minWidth="0" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label text="Almacenes registrados" styleClass="muted" wrapText="true"/>
+                    <Label fx:id="lblTotalAlmacenes" text="—" styleClass="stat-value"/>
+                    <Label text="Ubicaciones de almacenamiento" styleClass="caption" wrapText="true"/>
                 </VBox>
             </HBox>
+            <VBox spacing="12" styleClass="card">
+                <Label text="Un lugar para organizar tu inventario" styleClass="section-title" wrapText="true"/>
+                <Label text="Usa el menú lateral para registrar, consultar y actualizar la información. Cada producto se vincula con un almacén." styleClass="muted" wrapText="true"/>
+                <Label text="Antes de eliminar un almacén, mueve o retira los productos que tiene asociados." styleClass="caption" wrapText="true"/>
+            </VBox>
         </VBox>
     </center>
 </BorderPane>

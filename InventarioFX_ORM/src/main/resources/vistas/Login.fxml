@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="mx.unison.controladores.LoginController"
-      style="-fx-background-color: white;">
-    <padding>
-        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
-    </padding>
-
-    <Label text="UNISON" style="-fx-text-fill: #00529e; -fx-font-size: 45px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
-    <Label text="Sistema de Inventario 2.0" style="-fx-text-fill: #666666; -fx-font-size: 18px; -fx-font-family: 'Segoe UI';"/>
-
-    <VBox spacing="8" maxWidth="280">
-        <Label text="Usuario:" style="-fx-font-weight: bold; -fx-text-fill: #333333;"/>
-        <TextField fx:id="txtUsuario" promptText="Ej. ADMIN" style="-fx-padding: 10px; -fx-background-radius: 5px; -fx-border-color: #cccccc; -fx-border-radius: 5px;"/>
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="mx.unison.controladores.LoginController" stylesheets="@estilos.css" styleClass="login-shell">
+    <VBox alignment="CENTER_LEFT" spacing="22" maxWidth="380" maxHeight="-Infinity" styleClass="login-card">
+        <VBox spacing="8">
+            <Label text="INVENTARIO / UNISON" styleClass="eyebrow"/>
+            <Label fx:id="lblTitulo" text="Bienvenido" styleClass="login-title" wrapText="true"/>
+            <Label fx:id="lblSubtitulo" text="Ingresa a tu espacio de trabajo." styleClass="muted" wrapText="true"/>
+        </VBox>
+        <VBox spacing="8">
+            <Label text="Usuario" styleClass="field-label"/>
+            <TextField fx:id="txtUsuario" promptText="Escribe tu usuario" accessibleText="Usuario"/>
+        </VBox>
+        <VBox spacing="8">
+            <Label text="Contraseña" styleClass="field-label"/>
+            <PasswordField fx:id="txtPassword" promptText="Escribe tu contraseña" accessibleText="Contraseña"/>
+        </VBox>
+        <VBox fx:id="panelConfirmacion" spacing="8" visible="false" managed="false">
+            <Label text="Confirmar contraseña" styleClass="field-label"/>
+            <PasswordField fx:id="txtConfirmarPassword" promptText="Repite tu contraseña" accessibleText="Confirmar contraseña"/>
+        </VBox>
+        <Label fx:id="lblMensaje" text="" wrapText="true" maxWidth="Infinity" styleClass="message-error"/>
+        <Button fx:id="btnAcceder" text="Iniciar sesión" onAction="#onLoginButtonClick"
+                defaultButton="true" maxWidth="Infinity" styleClass="primary-button"/>
+        <Label text="Gestión de productos y almacenes" styleClass="caption" wrapText="true"/>
     </VBox>
-
-    <VBox spacing="8" maxWidth="280">
-        <Label text="Contraseña:" style="-fx-font-weight: bold; -fx-text-fill: #333333;"/>
-        <PasswordField fx:id="txtPassword" promptText="••••••••" style="-fx-padding: 10px; -fx-background-radius: 5px; -fx-border-color: #cccccc; -fx-border-radius: 5px;"/>
-    </VBox>
-
-    <Label fx:id="lblMensaje" style="-fx-text-fill: red; -fx-font-size: 13px;" wrapText="true"/>
-
-    <Button text="INICIAR SESIÓN" onAction="#onLoginButtonClick"
-            style="-fx-background-color: #00529e; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 12px; -fx-background-radius: 5px; -fx-cursor: hand;"
-            prefWidth="280"/>
-</VBox>
+</StackPane>

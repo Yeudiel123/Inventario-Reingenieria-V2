@@ -1,0 +1,79 @@
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #183449;
+    -fx-accent: #126ab3;
+    -fx-focus-color: #126ab3;
+    -fx-faint-focus-color: #126ab326;
+}
+.label { -fx-text-fill: #183449; }
+.app-shell, .page { -fx-background-color: #f3f6fa; }
+.page { -fx-padding: 28; }
+.page-title { -fx-font-size: 27px; -fx-font-weight: bold; }
+.section-title { -fx-font-size: 15px; -fx-font-weight: bold; }
+.muted { -fx-text-fill: #526779; -fx-font-size: 13px; }
+.caption { -fx-text-fill: #627487; -fx-font-size: 12px; }
+.field-label { -fx-font-size: 12px; -fx-font-weight: bold; }
+.card, .stat-card, .login-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #dfe7ef;
+    -fx-border-radius: 12;
+    -fx-padding: 22;
+}
+.stat-card { -fx-pref-width: 300; }
+.stat-value { -fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: #126ab3; }
+.app-header { -fx-background-color: #122e45; -fx-padding: 18 26; }
+.brand-title { -fx-font-size: 23px; -fx-font-weight: bold; -fx-text-fill: white; }
+.brand-caption { -fx-font-size: 10px; -fx-text-fill: #b3c9dc; }
+.header-user { -fx-text-fill: #dce8f2; -fx-font-size: 12px; }
+.sidebar { -fx-background-color: white; -fx-padding: 25 16 20; -fx-border-color: transparent #dfe7ef transparent transparent; }
+.nav-caption { -fx-text-fill: #627487; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 0 10 10; }
+.button {
+    -fx-background-color: #eaf0f6;
+    -fx-text-fill: #24465f;
+    -fx-font-weight: bold;
+    -fx-padding: 10 16;
+    -fx-background-radius: 7;
+    -fx-cursor: hand;
+}
+.button:hover { -fx-background-color: #dbe6f0; }
+.button:focused { -fx-border-color: #126ab3; -fx-border-radius: 7; -fx-border-width: 1; }
+.button:disabled { -fx-opacity: 0.55; }
+.primary-button { -fx-background-color: #126ab3; -fx-text-fill: white; }
+.primary-button:hover { -fx-background-color: #0b5796; }
+.danger-button { -fx-background-color: #fbe8e9; -fx-text-fill: #a52732; }
+.danger-button:hover { -fx-background-color: #f5d2d5; }
+.header-button { -fx-background-color: #29475f; -fx-text-fill: white; }
+.header-button:hover { -fx-background-color: #3a5972; }
+.nav-button { -fx-background-color: transparent; -fx-font-weight: normal; -fx-padding: 12 10; }
+.nav-button:hover, .nav-button:focused { -fx-background-color: #eaf2fa; -fx-text-fill: #0b5796; }
+.text-field, .password-field, .combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b9c8d5;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 10;
+    -fx-prompt-text-fill: #6b7e90;
+}
+.text-field:focused, .password-field:focused, .combo-box:focused { -fx-border-color: #126ab3; -fx-effect: dropshadow(gaussian, #126ab326, 4, 0, 0, 0); }
+.combo-box { -fx-padding: 4; }
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #dfe7ef;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 0;
+}
+.table-view .column-header-background, .table-view .column-header, .table-view .filler { -fx-background-color: #eaf0f6; }
+.table-view .column-header { -fx-size: 42; -fx-border-color: transparent transparent #dfe7ef transparent; }
+.table-view .column-header .label { -fx-alignment: CENTER_LEFT; -fx-padding: 0 10; -fx-font-size: 12px; -fx-font-weight: bold; }
+.table-row-cell { -fx-cell-size: 41; -fx-background-color: white; -fx-border-color: transparent transparent #edf2f7 transparent; }
+.table-row-cell:odd { -fx-background-color: #f9fbfd; }
+.table-row-cell:selected { -fx-background-color: #dcecff; -fx-text-background-color: #183449; }
+.table-cell { -fx-padding: 10; -fx-border-color: transparent; }
+.login-shell { -fx-background-color: #edf3f9; -fx-padding: 24; }
+.login-card { -fx-padding: 32; }
+.eyebrow { -fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #126ab3; }
+.login-title { -fx-font-size: 30px; -fx-font-weight: bold; }
+.message-error { -fx-text-fill: #aa2935; -fx-font-size: 12px; }

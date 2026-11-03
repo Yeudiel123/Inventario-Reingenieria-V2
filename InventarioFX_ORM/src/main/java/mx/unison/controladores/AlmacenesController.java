@@ -3,90 +3,95 @@ package mx.unison.controladores;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import mx.unison.datos.ConexionDB;
 import mx.unison.modelos.Almacen;
+import mx.unison.utileria.Sesion;
 
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class AlmacenesController {
-
     @FXML private TextField txtNombre;
     @FXML private TextField txtUbicacion;
     @FXML private TableView<Almacen> tablaAlmacenes;
 
-    private Almacen almacenEnEdicion = null;
+    private Almacen almacenEnEdicion;
 
     @FXML
     public void initialize() {
-        cargarDatos();
+        if (comprobarPermiso()) cargarDatos();
     }
 
     private void cargarDatos() {
         try {
-            var lista = ConexionDB.getAlmacenDao().queryForAll();
-            tablaAlmacenes.setItems(FXCollections.observableArrayList(lista));
+            tablaAlmacenes.setItems(FXCollections.observableArrayList(ConexionDB.getAlmacenDao().queryForAll()));
         } catch (SQLException e) {
-            e.printStackTrace();
+            mostrarAlerta("No se pudieron cargar los almacenes", "Comprueba el acceso a la base de datos e inténtalo de nuevo.", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     protected void guardarAlmacen() {
+        if (!comprobarPermiso()) return;
         try {
-            if (txtNombre.getText().trim().isEmpty() || txtUbicacion.getText().trim().isEmpty()) {
-                mostrarAlerta("Error", "Todos los campos son obligatorios.", Alert.AlertType.WARNING);
-                return;
-            }
-
-            Almacen a = (almacenEnEdicion == null) ? new Almacen() : almacenEnEdicion;
-
-            a.setNombre(txtNombre.getText().trim());
-            a.setUbicacion(txtUbicacion.getText().trim());
-            a.setCreadoPor("ADMIN");
-
+            Almacen original = almacenEnEdicion == null ? new Almacen() : almacenEnEdicion;
+            Almacen almacen = original.conCambios(txtNombre.getText(), txtUbicacion.getText(), Sesion.usuarioActual.getNombre());
             if (almacenEnEdicion == null) {
-                a.setFechaHoraCreacion(LocalDateTime.now().toString()); // Simulamos fecha automática
-                ConexionDB.getAlmacenDao().create(a);
-            } else {
-                ConexionDB.getAlmacenDao().update(a);
+                ConexionDB.getAlmacenDao().create(almacen);
+            } else if (ConexionDB.getAlmacenDao().update(almacen) == 0) {
+                mostrarAlerta("Almacén no disponible", "El almacén ya no existe. Actualiza tu selección.", Alert.AlertType.WARNING);
             }
-
             limpiarFormulario();
             cargarDatos();
-
+        } catch (IllegalArgumentException e) {
+            mostrarAlerta("Revisa el formulario", e.getMessage(), Alert.AlertType.WARNING);
         } catch (SQLException e) {
-            e.printStackTrace();
+            mostrarAlerta("No se pudo guardar", "Los cambios no se guardaron. Comprueba el acceso a la base de datos e inténtalo de nuevo.", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     protected void cargarParaEditar() {
+        if (!comprobarPermiso()) return;
         Almacen seleccionado = tablaAlmacenes.getSelectionModel().getSelectedItem();
-        if (seleccionado != null) {
-            txtNombre.setText(seleccionado.getNombre());
-            txtUbicacion.setText(seleccionado.getUbicacion());
-            almacenEnEdicion = seleccionado;
-        } else {
-            mostrarAlerta("Aviso", "Seleccione un almacén de la tabla para modificar.", Alert.AlertType.INFORMATION);
+        if (seleccionado == null) {
+            mostrarAlerta("Selecciona un almacén", "Selecciona una fila de la tabla para editarla.", Alert.AlertType.INFORMATION);
+            return;
         }
+        txtNombre.setText(seleccionado.getNombre());
+        txtUbicacion.setText(seleccionado.getUbicacion());
+        almacenEnEdicion = seleccionado;
     }
 
     @FXML
     protected void eliminarAlmacen() {
+        if (!comprobarPermiso()) return;
         Almacen seleccionado = tablaAlmacenes.getSelectionModel().getSelectedItem();
-        if (seleccionado != null) {
-            try {
-                ConexionDB.getAlmacenDao().delete(seleccionado);
-                cargarDatos();
-                limpiarFormulario();
-            } catch (SQLException e) {
-                mostrarAlerta("Error", "No se puede eliminar. Verifique que no haya productos asociados.", Alert.AlertType.ERROR);
+        if (seleccionado == null) {
+            mostrarAlerta("Selecciona un almacén", "Selecciona una fila de la tabla para eliminarla.", Alert.AlertType.INFORMATION);
+            return;
+        }
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION,
+                "Se eliminará el almacén «" + seleccionado.getNombre() + "». Esta acción no se puede deshacer.",
+                ButtonType.CANCEL, ButtonType.OK);
+        confirmacion.setTitle("Eliminar almacén");
+        confirmacion.setHeaderText("Confirma la eliminación");
+        if (confirmacion.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) return;
+        try {
+            Sesion.requerirRol("ADMIN", "ALMACEN");
+            if (ConexionDB.getProductoDao().queryBuilder().where().eq("almacen_id", seleccionado.getId()).countOf() > 0) {
+                mostrarAlerta("Almacén con productos", "Reasigna o elimina sus productos antes de eliminar este almacén.", Alert.AlertType.WARNING);
+                return;
             }
-        } else {
-            mostrarAlerta("Aviso", "Seleccione un almacén de la tabla para eliminar.", Alert.AlertType.INFORMATION);
+            ConexionDB.getAlmacenDao().delete(seleccionado);
+            limpiarFormulario();
+            cargarDatos();
+        } catch (SecurityException e) {
+            mostrarAlerta("Acceso restringido", e.getMessage(), Alert.AlertType.WARNING);
+        } catch (SQLException e) {
+            mostrarAlerta("No se pudo eliminar", "El almacén no se eliminó. Comprueba que no tenga productos y que la base de datos esté disponible.", Alert.AlertType.ERROR);
         }
     }
 
@@ -94,7 +99,18 @@ public class AlmacenesController {
     protected void limpiarFormulario() {
         txtNombre.clear();
         txtUbicacion.clear();
+        tablaAlmacenes.getSelectionModel().clearSelection();
         almacenEnEdicion = null;
+    }
+
+    private boolean comprobarPermiso() {
+        try {
+            Sesion.requerirRol("ADMIN", "ALMACEN");
+            return true;
+        } catch (SecurityException e) {
+            mostrarAlerta("Acceso restringido", e.getMessage(), Alert.AlertType.WARNING);
+            return false;
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {

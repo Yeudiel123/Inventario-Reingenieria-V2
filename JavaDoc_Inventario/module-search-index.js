@@ -1,1 +1,0 @@
-moduleSearchIndex = [{"l":"InventarioFX_ORM"}];updateSearchResults();
