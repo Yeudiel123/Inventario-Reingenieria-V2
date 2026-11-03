@@ -18,9 +18,8 @@ public class Producto {
     @DatabaseField
     private int cantidad;
 
-    // ¡MAGIA ORM! En lugar de guardar un 'int almacenId', guardamos el objeto completo.
-    // foreign = true hace la relación de llaves foráneas automáticamente en SQL.
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "almacen_id")
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "almacen_id",
+            columnDefinition = "INTEGER NOT NULL REFERENCES almacenes(id) ON DELETE RESTRICT")
     private Almacen almacen;
 
     @DatabaseField(columnName = "ultimo_usuario")
@@ -28,17 +27,51 @@ public class Producto {
 
     public Producto() {}
 
-    // Getters y Setters
+    /** Devuelve una edición validada sin modificar la fila que muestra la tabla. */
+    public Producto conCambios(String nombre, double precio, int cantidad, Almacen almacen, String usuario) {
+        if (usuario == null || usuario.isBlank()) {
+            throw new IllegalArgumentException("Se necesita un usuario para registrar el cambio.");
+        }
+        Producto copia = new Producto();
+        copia.id = id;
+        copia.setNombre(nombre);
+        copia.setPrecio(precio);
+        copia.setCantidad(cantidad);
+        copia.setAlmacen(almacen);
+        copia.ultimoUsuario = usuario;
+        return copia;
+    }
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setNombre(String nombre) {
+        if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("El nombre del producto es obligatorio.");
+        }
+        this.nombre = nombre.trim();
+    }
     public double getPrecio() { return precio; }
-    public void setPrecio(double precio) { this.precio = precio; }
+    public void setPrecio(double precio) {
+        if (!Double.isFinite(precio) || precio < 0) {
+            throw new IllegalArgumentException("El precio debe ser un número finito mayor o igual a cero.");
+        }
+        this.precio = precio;
+    }
     public int getCantidad() { return cantidad; }
-    public void setCantidad(int cantidad) { this.cantidad = cantidad; }
+    public void setCantidad(int cantidad) {
+        if (cantidad < 0) {
+            throw new IllegalArgumentException("La cantidad debe ser un entero mayor o igual a cero.");
+        }
+        this.cantidad = cantidad;
+    }
     public Almacen getAlmacen() { return almacen; }
-    public void setAlmacen(Almacen almacen) { this.almacen = almacen; }
+    public void setAlmacen(Almacen almacen) {
+        if (almacen == null) {
+            throw new IllegalArgumentException("Selecciona un almacén para el producto.");
+        }
+        this.almacen = almacen;
+    }
     public String getUltimoUsuario() { return ultimoUsuario; }
     public void setUltimoUsuario(String ultimoUsuario) { this.ultimoUsuario = ultimoUsuario; }
 }

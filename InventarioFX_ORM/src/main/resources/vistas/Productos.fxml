@@ -2,43 +2,54 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-
-<VBox spacing="15" style="-fx-padding: 20px; -fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.unison.controladores.ProductosController">
-    <Label text="Gestión de Productos" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #00529e;"/>
-
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="txtNombre" promptText="Nombre del producto" prefWidth="150" style="-fx-padding: 8px;"/>
-        <TextField fx:id="txtPrecio" promptText="Precio" prefWidth="80" style="-fx-padding: 8px;"/>
-        <TextField fx:id="txtCantidad" promptText="Stock" prefWidth="80" style="-fx-padding: 8px;"/>
-
-        <ComboBox fx:id="cmbAlmacen" promptText="Seleccione Almacén" prefWidth="150" style="-fx-padding: 4px;"/>
-
-        <Button text="💾 Guardar" onAction="#guardarProducto" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
-        <Button text="❌ Cancelar" onAction="#limpiarFormulario" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
-    </HBox>
-
-    <TableView fx:id="tablaProductos" VBox.vgrow="ALWAYS" style="-fx-font-size: 14px;">
+<VBox spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="mx.unison.controladores.ProductosController" stylesheets="@estilos.css" styleClass="page">
+    <VBox spacing="7">
+        <Label text="Productos" styleClass="page-title"/>
+        <Label text="Administra el catálogo, los precios y las existencias por almacén." styleClass="muted" wrapText="true"/>
+    </VBox>
+    <VBox spacing="16" styleClass="card">
+        <Label text="Datos del producto" styleClass="section-title"/>
+        <GridPane hgap="14" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="32"/>
+                <ColumnConstraints percentWidth="19"/>
+                <ColumnConstraints percentWidth="17"/>
+                <ColumnConstraints percentWidth="32"/>
+            </columnConstraints>
+            <Label text="Nombre" styleClass="field-label"/>
+            <Label text="Precio unitario ($)" styleClass="field-label" wrapText="true" GridPane.columnIndex="1"/>
+            <Label text="Cantidad" styleClass="field-label" GridPane.columnIndex="2"/>
+            <Label text="Almacén" styleClass="field-label" GridPane.columnIndex="3"/>
+            <TextField fx:id="txtNombre" promptText="Nombre del producto" accessibleText="Nombre del producto" minWidth="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="txtPrecio" promptText="0.00" accessibleText="Precio unitario" minWidth="0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <TextField fx:id="txtCantidad" promptText="0" accessibleText="Cantidad de productos" minWidth="0" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="cmbAlmacen" promptText="Selecciona un almacén" accessibleText="Almacén del producto" minWidth="0" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        </GridPane>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button text="Guardar producto" onAction="#guardarProducto" styleClass="primary-button"/>
+            <Button text="Limpiar formulario" onAction="#limpiarFormulario"/>
+        </HBox>
+    </VBox>
+    <TableView fx:id="tablaProductos" VBox.vgrow="ALWAYS" minHeight="170" accessibleText="Catálogo de productos">
+        <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+        <placeholder><VBox alignment="CENTER" spacing="8">
+            <Label text="Aún no hay productos" styleClass="section-title"/>
+            <Label text="Completa el formulario para registrar el primero." styleClass="muted" wrapText="true"/>
+        </VBox></placeholder>
         <columns>
-            <TableColumn text="ID" prefWidth="50">
-                <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Nombre" prefWidth="200">
-                <cellValueFactory><PropertyValueFactory property="nombre" /></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Precio ($)" prefWidth="100">
-                <cellValueFactory><PropertyValueFactory property="precio" /></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Stock" prefWidth="80">
-                <cellValueFactory><PropertyValueFactory property="cantidad" /></cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Almacén Asignado" prefWidth="200">
-                <cellValueFactory><PropertyValueFactory property="almacen" /></cellValueFactory>
-            </TableColumn>
+            <TableColumn text="ID" prefWidth="48" maxWidth="80"><cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory></TableColumn>
+            <TableColumn text="Producto" prefWidth="200"><cellValueFactory><PropertyValueFactory property="nombre"/></cellValueFactory></TableColumn>
+            <TableColumn fx:id="colPrecio" text="Precio ($)" prefWidth="100"><cellValueFactory><PropertyValueFactory property="precio"/></cellValueFactory></TableColumn>
+            <TableColumn text="Cantidad" prefWidth="85"><cellValueFactory><PropertyValueFactory property="cantidad"/></cellValueFactory></TableColumn>
+            <TableColumn text="Almacén" prefWidth="170"><cellValueFactory><PropertyValueFactory property="almacen"/></cellValueFactory></TableColumn>
+            <TableColumn text="Actualizado por" prefWidth="130"><cellValueFactory><PropertyValueFactory property="ultimoUsuario"/></cellValueFactory></TableColumn>
         </columns>
     </TableView>
-
-    <HBox spacing="15" alignment="CENTER_RIGHT">
-        <Button text="✏️ Modificar Seleccionado" onAction="#cargarParaEditar" style="-fx-background-color: #ffc107; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
-        <Button text="🗑️ Eliminar Seleccionado" onAction="#eliminarProducto" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-cursor: hand;"/>
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Label text="Selecciona una fila para modificarla." styleClass="caption" wrapText="true"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Editar selección" onAction="#cargarParaEditar"/>
+        <Button text="Eliminar selección" onAction="#eliminarProducto" styleClass="danger-button"/>
     </HBox>
 </VBox>

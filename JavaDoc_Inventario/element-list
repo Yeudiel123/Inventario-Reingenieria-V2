@@ -1,6 +1,0 @@
-module:InventarioFX_ORM
-mx.unison.controladores
-mx.unison.datos
-mx.unison.modelos
-mx.unison.utileria
-mx.unison.vistas

@@ -1,0 +1,32 @@
+name: Build and tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Java 21 / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        working-directory: InventarioFX_ORM
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+      - name: Set up Java 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: InventarioFX_ORM/pom.xml
+      - name: Compile and run tests
+        run: mvn --batch-mode --no-transfer-progress clean verify
